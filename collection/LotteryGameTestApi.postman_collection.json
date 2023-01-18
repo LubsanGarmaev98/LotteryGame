@@ -1,0 +1,372 @@
+{
+	"info": {
+		"_postman_id": "0aa242bb-f32d-4dcf-bd96-1acde4391b26",
+		"name": "LotteryGameTestApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24169817"
+	},
+	"item": [
+		{
+			"name": "localhost/api/users/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"lubsan14091998@gmail.com\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/api/users/register",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost/api/login",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"lubsan14091998@gmail.com\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/api/login",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost/api/users/101",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0L2FwaS9sb2dpbiIsImlhdCI6MTY3MzM4MTY3NiwiZXhwIjoxNjczMzg1Mjc2LCJuYmYiOjE2NzMzODE2NzYsImp0aSI6Ik00am9kQ0t3cUVmclVaWXUiLCJzdWIiOiIxMDEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.XDok0YotP4LzWa6gVqeNoxfuaIjCOAk86I4AaeUJKg0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fisrt_name\": \"Lubsan\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/api/users/101",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"users",
+						"101"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost/api/users/101",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0L2FwaS9sb2dpbiIsImlhdCI6MTY3MzM4MTY3NiwiZXhwIjoxNjczMzg1Mjc2LCJuYmYiOjE2NzMzODE2NzYsImp0aSI6Ik00am9kQ0t3cUVmclVaWXUiLCJzdWIiOiIxMDEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.XDok0YotP4LzWa6gVqeNoxfuaIjCOAk86I4AaeUJKg0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost/api/users/101",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"users",
+						"101"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost/api/lottery_games",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/api/lottery_games",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"lottery_games"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost/api/lottery_game_matchs",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0L2FwaS9sb2dpbiIsImlhdCI6MTY3MzM4NTUwNiwiZXhwIjoxNjczMzg5MTA2LCJuYmYiOjE2NzMzODU1MDYsImp0aSI6IjhnV3dtQWlUbmYxMjE3UkciLCJzdWIiOiIxMDIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.YanfR4aLvMO3TYBPNzsaCV-liINK2jBkaAZKbhF_ZMs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"gameId\": \"20\",\n    \"date\": \"2023-1-02\",\n    \"time\": \"09:30:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/api/lottery_game_matchs",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"lottery_game_matchs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost/api/lottery_game_matchs",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0L2FwaS9sb2dpbiIsImlhdCI6MTY3MzM3NDAwMSwiZXhwIjoxNjczMzc3NjAxLCJuYmYiOjE2NzMzNzQwMDEsImp0aSI6ImpCOHUzM3ZGektMTDRZRmciLCJzdWIiOiIxMDEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.95Y02xuJ-WFgE3oA75xkc43hEFsyX45_avNv3P823z4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/api/lottery_game_matchs",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"lottery_game_matchs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost/api/lottery_game_match_users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0L2FwaS9sb2dpbiIsImlhdCI6MTY3MzM3MTM1NiwiZXhwIjoxNjczMzc0OTU2LCJuYmYiOjE2NzMzNzEzNTYsImp0aSI6IlVFc3M4czlhWWd6am9hdGUiLCJzdWIiOiIxMDEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.83snOMRhuHNF87C1h_WbOGbwOXFUm1ukMgvcjTHCP3k",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"LotteryGameMatchId\": \"8\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/api/lottery_game_match_users",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"lottery_game_match_users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost/api/lottery_game_matchs?LotteryGameId=1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/api/lottery_game_matchs?LotteryGameId=1",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"lottery_game_matchs"
+					],
+					"query": [
+						{
+							"key": "LotteryGameId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost/api/users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0L2FwaS9sb2dpbiIsImlhdCI6MTY3MzI0MTc3MSwiZXhwIjoxNjczMjQ1MzcxLCJuYmYiOjE2NzMyNDE3NzEsImp0aSI6ImUxM1h5T0xEN1NocUNRYmciLCJzdWIiOiIxMDIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.AoIt4xXOosjE8hzQuXdMIv8VWHWsiANDcBOQGSAMOnw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/api/users",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);",
+					"});"
+				]
+			}
+		}
+	]
+}
