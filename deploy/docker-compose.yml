@@ -19,6 +19,7 @@ services:
       - ./.docker/conf/php/php.ini:/usr/local/etc/php/conf.d/php.ini
       - ./.docker/conf/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
       - ./../:/var/www/html
+      - ./../.env:/var/www/html/.env
 
   db:
     image: postgres:10.1

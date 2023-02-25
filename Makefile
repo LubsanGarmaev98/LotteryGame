@@ -4,7 +4,7 @@ dev-build:
 
 .PHONY: dev-up
 dev-up:
-	cd deploy && docker compose --env-file ./../.env up -d
+	cd deploy && docker compose up -d
 
 .PHONY: dev-down
 dev-down:
