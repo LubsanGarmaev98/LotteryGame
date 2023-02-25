@@ -17,3 +17,7 @@ dev-ps:
 .PHONY: bash
 bash:
 	cd deploy && docker compose --env-file ./../.env exec php-fpm bash
+
+.PHONY: down-build-up
+down-build-up:
+	cd deploy && docker compose --env-file ./../.env down && docker compose --env-file ./../.env build && docker compose --env-file ./../.env up -d
