@@ -10,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class SendEmailJob implements ShouldQueue
@@ -32,13 +33,14 @@ class SendEmailJob implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         try {
-            Mail::to(env('MAIL_TO_ADDRESS'))->send(new SendNotification($this->user));
-        }catch (\Throwable $throwable)
+            Mail::to(env('MAIL_TO_ADDRESS'))
+                ->send(new SendNotification($this->user));
+        } catch (\Throwable $throwable)
         {
-            print_r($throwable->getMessage());
+            Log::info($throwable->getMessage());
         }
     }
 }

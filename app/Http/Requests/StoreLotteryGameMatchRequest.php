@@ -14,7 +14,7 @@ class StoreLotteryGameMatchRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -24,12 +24,12 @@ class StoreLotteryGameMatchRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'gameId' => ['required', 'int'],
-            'date' => ['required', 'date', 'date_format:Y-m-d', 'after_or_equal:'. Carbon::now()->format('Y-m-d')],
-            'time' => ['required', 'after:' . Carbon::now()->format('H:i:s')]
+            'game_id'   => ['required', 'int'],
+            'date'      => ['required', 'date', 'date_format:Y-m-d', 'after_or_equal:'. Carbon::now()->format('Y-m-d')],
+            'time'      => ['required', 'after:' . Carbon::now()->format('H:i:s')]
         ];
     }
 
@@ -42,13 +42,13 @@ class StoreLotteryGameMatchRequest extends FormRequest
         ]));
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
-            'gameId.required' => 'GameId is required',
-            'date.required' => 'Date is required',
-            'time.required' => 'Time is required',
-            'time.after' => 'The time must be a time after '. Carbon::now()->format('H:i:s') .'.'
+            'game_id.required'  => 'GameId is required',
+            'date.required'     => 'Date is required',
+            'time.required'     => 'Time is required',
+            'time.after'        => 'The time must be a time after '. Carbon::now()->format('H:i:s') .'.'
         ];
     }
 }

@@ -5,67 +5,73 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreLotteryGameMatchRequest;
 use App\Models\LotteryGame;
 use App\Models\LotteryGameMatch;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class LotteryGameMatchController extends Controller
 {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param  StoreLotteryGameMatchRequest  $request
+     * @return JsonResponse
      */
-    public function store(StoreLotteryGameMatchRequest $request)
+    public function store(StoreLotteryGameMatchRequest $request): JsonResponse
     {
-        $params = $request->validated();
-        $user = auth()->user();
+        $data = $request->validated();
 
-        if($user->isAdmin())
-        {
-            $game = LotteryGame::find($params['game_id']);
-            if(!empty($game))
-            {
-
-                $lotteryGame = LotteryGameMatch::create
-                ([
-                    'game_id' => $game->id,
-                    'start_date' => $params['date'],
-                    'start_time' => $params['time'],
-                    'is_finished' => false
-                ]);
-
-                return response()->json(['message' => $lotteryGame]);
-            }
-
-            return response()->json(['error' => 'Такой игры не существует!'], 401);
+        $game = LotteryGame::query()->find($data['game_id']);
+        if (!empty($game)) {
+            return response()->json([
+                'error' => 'Такой игры не существует!'
+            ], 401);
         }
 
-        return response()->json(['error' => 'Только администратор может создавать матчи'], 401);
+        $lotteryGame = LotteryGameMatch::query()->create([
+            'game_id'       => $game->id,
+            'start_date'    => $data['date'],
+            'start_time'    => $data['time'],
+            'is_finished'   => false
+        ]);
 
+        return response()->json([
+            'message' => $lotteryGame
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\LotteryGameMatch  $lotteryGameMatch
-     * @return \Illuminate\Http\JsonResponse
+     * @param int $id
+     * @return JsonResponse
      */
-    public function update(Request $request)
+    public function update(int $id): JsonResponse
     {
-        $user = auth()->user();
-        if($user->isAdmin())
-        {
-            $lotteryGameMatch = LotteryGameMatch::find($request->id);
-            if(!$lotteryGameMatch->is_finished)
-            {
-                $lotteryGameMatch->is_finished = true;
-                $lotteryGameMatch->save();
-            }
-            return response()->json(['message' => $lotteryGameMatch]);
+        /** @var LotteryGameMatch $lotteryGameMatch */
+        $lotteryGameMatch = LotteryGameMatch::query()->find($id);
+        if (empty($lotteryGameMatch)) {
+            return response()->json([
+                'error' => 'LotteryGameMatch with ' . $id . ' not found'
+            ]);
         }
 
-        return response()->json(['error' => 'Только администратор может изменять данные матча']);
+        if (!$lotteryGameMatch->is_finished) {
+            return response()->json([
+                'error' => 'LotteryGameMatch with ' . $id . ' already finished'
+            ]);
+        }
+
+        try {
+            $lotteryGameMatch->is_finished = true;
+            $lotteryGameMatch->save();
+        } catch (\Exception $exception) {
+            return response()->json([
+                'error' => $exception->getMessage()
+            ]);
+        }
+
+        return response()->json([
+            'message'   => $lotteryGameMatch,
+            'result'    => 'Success'
+        ]);
     }
 }

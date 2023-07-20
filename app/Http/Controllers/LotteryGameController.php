@@ -2,32 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ShowByIdLotteryGameRequest;
 use App\Models\LotteryGame;
-use App\Models\LotteryGameMatch;
-use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class LotteryGameController extends Controller
 {
-    public function showAll()
+    public function showAll(): JsonResponse
     {
         $lotteryGames = LotteryGame::with('getMatches')->get();
 
-        return response()->json($lotteryGames);
+        return response()->json([
+            'data' => $lotteryGames
+        ]);
     }
 
-    public function showById(ShowByIdLotteryGameRequest $request)
+    public function showById(int $id): JsonResponse
     {
-        $params = $request->validated();
-
-        $lotteryGame = LotteryGame::find($params['lottery_game_id']);
-        if(empty($lotteryGame))
-        {
-            return response()->json(['error' => 'Такой игры не существует!'], 401);
+        /** @var LotteryGame $lotteryGame */
+        $lotteryGame = LotteryGame::query()->find($id);
+        if (empty($lotteryGame)) {
+            return response()->json([
+                'error' => 'Такой игры не существует!'
+            ], 401);
         }
 
         $lotteryGameMatches = $lotteryGame->getMatches()->get();
+        if (empty($lotteryGameMatches)) {
+            return response()->json([
+                'error' => 'Not found Lottery Game Match!'
+            ], 401);
+        }
 
-        return response()->json($lotteryGameMatches);
+        return response()->json([
+            'data'=> $lotteryGameMatches
+        ]);
     }
 }

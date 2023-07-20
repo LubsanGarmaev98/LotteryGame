@@ -29,9 +29,9 @@ class SendNotification extends Mailable
     /**
      * Get the message envelope.
      *
-     * @return \Illuminate\Mail\Mailables\Envelope
+     * @return Envelope
      */
-    public function envelope()
+    public function envelope(): Envelope
     {
         return new Envelope(
             subject: 'Notification of a registered new user',
@@ -41,9 +41,9 @@ class SendNotification extends Mailable
     /**
      * Get the message content definition.
      *
-     * @return \Illuminate\Mail\Mailables\Content
+     * @return Content
      */
-    public function content()
+    public function content(): Content
     {
         return new Content(
             view: 'mail.new_user_notification',
@@ -55,7 +55,7 @@ class SendNotification extends Mailable
      *
      * @return array
      */
-    public function attachments()
+    public function attachments(): array
     {
         return [];
     }

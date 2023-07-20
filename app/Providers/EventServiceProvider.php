@@ -33,11 +33,11 @@ class EventServiceProvider extends ServiceProvider
             GamerCountCheckListener::class
         ],
 
-        BeforeUpdateLotteryGameMatch::class =>[
+        BeforeUpdateLotteryGameMatch::class => [
             FindWinnerUserLotteryGameMatchListener::class
         ],
 
-        AfterUpdatedLotteryGameMatch::class =>[
+        AfterUpdatedLotteryGameMatch::class => [
             RewardPointsWinnerUserLotteryGameMatchListener::class
         ],
 

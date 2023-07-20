@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Events\CreatedUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -14,14 +15,25 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $attributes = [
+        'is_admin' => false
+    ];
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
+        'first_name',
+        'last_name',
         'email',
+        'is_admin',
+        'points',
         'password',
+    ];
+
+    protected $dispatchesEvents = [
+        'created' => CreatedUser::class
     ];
 
     /**
@@ -49,7 +61,13 @@ class User extends Authenticatable implements JWTSubject
         return $this->is_admin;
     }
 
-    protected $dispatchesEvents = [
-        'created' => CreatedUser::class
-    ];
+    public function lotteryGameMatchUser(): BelongsTo
+    {
+        return $this->belongsTo(LotteryGameMatchUser::class);
+    }
+
+    public function lotteryGameMatch(): BelongsTo
+    {
+        return $this->belongsTo(LotteryGameMatch::class, 'winner_id');
+    }
 }

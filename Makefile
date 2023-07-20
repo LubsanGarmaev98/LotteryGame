@@ -1,23 +1,23 @@
 .PHONY: dev-build
 dev-build:
-	cd deploy && docker compose --env-file ./../.env build
+	docker-compose build
 
 .PHONY: dev-up
 dev-up:
-	cd deploy && docker compose up -d
+	docker-compose up -d
 
 .PHONY: dev-down
 dev-down:
-	cd deploy && docker compose --env-file ./../.env down
+	docker-compose down
 
 .PHONY: dev-ps
 dev-ps:
-	cd deploy && docker compose --env-file ./../.env ps
+	docker-compose ps
 
-.PHONY: bash
+.PHONY: dev-bash-php-fpm
 bash:
-	cd deploy && docker compose --env-file ./../.env exec php-fpm bash
+	docker-compose exec php-fpm bash
 
 .PHONY: down-build-up
 down-build-up:
-	cd deploy && docker compose --env-file ./../.env down && docker compose --env-file ./../.env build && docker compose --env-file ./../.env up -d
+	docker-compose down && docker-compose build && docker-compose up -d

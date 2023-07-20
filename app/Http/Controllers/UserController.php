@@ -2,119 +2,112 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\DeleteUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param StoreUserRequest  $request
+     * @return JsonResponse
      */
-    public function store(StoreUserRequest $request)
+    public function store(StoreUserRequest $request): JsonResponse
     {
-        $params = $request->validated();
-        $user = User::create([
-            'email' => $params['email'],
-            'password' => Hash::make($params['password'])
+        $data = $request->validated();
+
+        $user = User::query()->create([
+            'email' => $data['email'],
+            'password' => bcrypt($data['password'])
         ]);
 
-        return response()->json(['message' => $user]);
+        return response()->json([
+            'data' => $user,
+            'result' => 'Success'
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\JsonResponse
      */
-    public function showAllUsers()
+    public function showAllUsers(): JsonResponse
     {
-        $user = auth()->user();
+        $users = User::with('lotteryGameMatch')->get();
 
-        if($user->isAdmin())
-        {
-            $users = User::with('getlotteryGameMatch')->get();
-
-            return response()->json(['message' => $users]);
-        }
-
-        return response()->json(['error' => 'Только администратор может смотреть всех пользователей'], 403);
+        return response()->json([
+            'data'   => $users,
+            'result'    => 'Success'
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\JsonResponse
+     * @param UpdateUserRequest $request
+     * @param int $id
+     * @return JsonResponse
      */
-    public function update(UpdateUserRequest $request)
+    public function update(UpdateUserRequest $request, int $id): JsonResponse
     {
-        $params = $request->validated();
+        $data = $request->validated();
 
+        /** @var User $user */
         $user = auth()->user();
-        if($user->isAdmin())
-        {
-            $user = User::find($params['id']);
-            if(empty($user))
-            {
-                return response()->json(['error' => 'Такого пользователя не существует'], 404);
-            }
+
+        if(empty($data) && $user->getAuthIdentifier() != $id) {
+            return response()->json([
+                'error' => 'There is nothing to update or id don\'t match'
+            ]);
         }
 
-        foreach ($params as $key => $item) {
-            switch ($key) {
-                case 'first_name':
-                    $user->first_name = $params['first_name'];
-                    break;
-                case 'last_name':
-                    $user->last_name = $params['last_name'];
-                    break;
-                case 'email':
-                    $user->email = $params['email'];
-                    break;
-                case 'password':
-                    $user->password = Hash::make($params['password']);
-                    break;
-                case 'admin':
-                    $user->is_admin = $params['admin'];
-                    break;
-            }
+        if(!$user->isDirty()) {
+            return response()->json([
+                'data'      => 'There is nothing to update',
+                'result'    => 'Success'
+            ]);
         }
 
+        $user->update($data);
         $user->save();
 
-        return response()->json(['message' => $user]);
+        return response()->json([
+            'data'      => $user,
+            'result'    => 'Success'
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\JsonResponse
+     * @param int $id
+     * @return JsonResponse
      */
-    public function delete(DeleteUserRequest $request)
+    public function delete(int $id): JsonResponse
     {
-        $params = $request->validated();
-
+        /** @var User $user */
         $user = auth()->user();
-        if($user->isAdmin())
-        {
-            $user = User::find($params['id']);
-            if(empty($user))
-            {
-                return response()->json(['error' => 'Такого пользователя не существует'], 404);
-            }
+        if($user->getAuthIdentifier() != $id) {
+            return response()->json([
+                'error' => 'Id don\'t match'
+            ]);
         }
 
-        $user->delete();
+        try {
+            $user->delete();
+        } catch (\Exception $exception)
+        {
+            return response()->json([
+                'error' => $exception->getMessage(),
+            ]);
+        }
 
-        return response()->json(['message' => 'Пользователь успешно удален']);
+        return response()->json([
+            'data' => 'Пользователь успешно удален',
+            'result'    => 'Success'
+        ]);
     }
 }

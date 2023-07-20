@@ -6,7 +6,12 @@ use App\Events\AfterUpdatedLotteryGameMatch;
 use App\Events\BeforeUpdateLotteryGameMatch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property bool is_finished
+ */
 class LotteryGameMatch extends Model
 {
     use HasFactory;
@@ -15,6 +20,7 @@ class LotteryGameMatch extends Model
         'game_id',
         'start_date',
         'start_time',
+        'winner_id',
         'is_finished'
     ];
 
@@ -22,4 +28,14 @@ class LotteryGameMatch extends Model
         'updating' => BeforeUpdateLotteryGameMatch::class,
         'updated' => AfterUpdatedLotteryGameMatch::class
     ];
+
+    public function lotteryGame(): belongsTo
+    {
+        return $this->belongsTo(LotteryGame::class);
+    }
+
+    public function user(): hasMany
+    {
+        return $this->hasMany(User::class);
+    }
 }

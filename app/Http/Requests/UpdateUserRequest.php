@@ -23,15 +23,14 @@ class UpdateUserRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'id' => ['required' ,'int'],
-            'first_name' => ['nullable', 'string'],
-            'last_name' => ['nullable', 'string'],
-            'email' => ['nullable', 'min:8', 'string', 'email', 'unique:users'],
-            'password' => ['nullable', 'min:8'],
-            'admin' => ['nullable', 'bool']
+            'first_name'    => ['nullable', 'string'],
+            'last_name'     => ['nullable', 'string'],
+            'email'         => ['nullable', 'string', 'email'],
+            'password'      => ['nullable', 'min:4', 'max:20'],
+            'admin'         => ['nullable', 'bool']
         ];
     }
 
@@ -42,13 +41,5 @@ class UpdateUserRequest extends FormRequest
             'message'   => 'Validation errors',
             'data'      => $validator->errors()
         ]));
-    }
-
-    public function messages()
-    {
-        return [
-            'id.required' => 'Id must be an integer type',
-            'email.unique' => 'The user with the specified email address is already registered'
-        ];
     }
 }

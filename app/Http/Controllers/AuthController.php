@@ -20,14 +20,17 @@ class AuthController extends Controller
     /**
      * Get a JWT via given credentials.
      *
+     * @param LoginUserRequest $request
      * @return JsonResponse
      */
-    public function login(LoginUserRequest $request)
+    public function login(LoginUserRequest $request): JsonResponse
     {
         $params = $request->validated();
 
         if (!$token = auth()->attempt($params)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json([
+                'error' => 'Unauthorized'
+            ], 401);
         }
 
         return $this->respondWithToken($token);
@@ -38,7 +41,7 @@ class AuthController extends Controller
      *
      * @return JsonResponse
      */
-    public function me()
+    public function me(): JsonResponse
     {
         return response()->json(auth()->user());
     }
@@ -48,11 +51,13 @@ class AuthController extends Controller
      *
      * @return JsonResponse
      */
-    public function logout()
+    public function logout(): JsonResponse
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json([
+            'message' => 'Successfully logged out'
+        ]);
     }
 
     /**
@@ -60,7 +65,7 @@ class AuthController extends Controller
      *
      * @return JsonResponse
      */
-    public function refresh()
+    public function refresh(): JsonResponse
     {
         return $this->respondWithToken(auth()->refresh());
     }
@@ -72,7 +77,7 @@ class AuthController extends Controller
      *
      * @return JsonResponse
      */
-    protected function respondWithToken($token)
+    protected function respondWithToken(string $token): JsonResponse
     {
         header('Authorization:' . $token);
 
