@@ -21,7 +21,7 @@ class LotteryGameMatchUserController extends Controller
         $user = auth()->user();
 
         $lotteryGameMatch = LotteryGameMatch::query()->find($params['LotteryGameMatchId']);
-        if(empty($lotteryGameMatch)) {
+        if (empty($lotteryGameMatch)) {
             return response()->json([
                 'error' => 'Указанного матча не существует!'
             ]);

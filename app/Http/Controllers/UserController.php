@@ -58,13 +58,13 @@ class UserController extends Controller
         /** @var User $user */
         $user = auth()->user();
 
-        if(empty($data) && $user->getAuthIdentifier() != $id) {
+        if (empty($data) && $user->getAuthIdentifier() != $id) {
             return response()->json([
                 'error' => 'There is nothing to update or id don\'t match'
             ]);
         }
 
-        if(!$user->isDirty()) {
+        if (!$user->isDirty()) {
             return response()->json([
                 'data'      => 'There is nothing to update',
                 'result'    => 'Success'
@@ -90,7 +90,7 @@ class UserController extends Controller
     {
         /** @var User $user */
         $user = auth()->user();
-        if($user->getAuthIdentifier() != $id) {
+        if ($user->getAuthIdentifier() != $id) {
             return response()->json([
                 'error' => 'Id don\'t match'
             ]);

@@ -36,8 +36,7 @@ class SendEmailJob implements ShouldQueue
     public function handle(): void
     {
         try {
-            Mail::to(env('MAIL_TO_ADDRESS'))
-                ->send(new SendNotification($this->user));
+            Mail::to(env('MAIL_TO_ADDRESS'))->send(new SendNotification($this->user));
         } catch (\Throwable $throwable)
         {
             Log::info($throwable->getMessage());

@@ -13,9 +13,9 @@ class StoreLotteryGameMatchUserRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,7 @@ class StoreLotteryGameMatchUserRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'LotteryGameMatchId' => ['required', 'int']
@@ -39,7 +39,7 @@ class StoreLotteryGameMatchUserRequest extends FormRequest
         ]));
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'LotteryGameMatchId.required' => 'LotteryGameMatchId is required'
